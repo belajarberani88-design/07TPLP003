@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Online Pemrograman Web</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Custom Scrollbar for navigation grid and review */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* Highlight transition effects */
+        .option-transition {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between text-slate-800">
+
+    <!-- Header / Navbar -->
+    <header class="bg-indigo-900 text-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/10 p-2 rounded-lg">
+                    <i class="fas fa-laptop-code text-2xl text-amber-400"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg sm:text-xl tracking-tight">WEB-EXAM</h1>
+                    <p class="text-xs text-indigo-200">Evaluasi Pemrograman Web</p>
+                </div>
+            </div>
+            <div id="header-user-badge" class="hidden flex items-center space-x-3 bg-white/10 px-3 py-1.5 rounded-full border border-white/10 text-xs sm:text-sm">
+                <i class="fas fa-user-circle text-lg text-amber-300"></i>
+                <span id="badge-nama" class="font-semibold max-w-[120px] truncate">Siswa</span>
+                <span class="text-indigo-300">|</span>
+                <span id="badge-nim" class="font-mono">NIM</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6 sm:px-6 lg:px-8">
+
+        <!-- SCREEN 1: Registration Form -->
+        <section id="screen-register" class="max-w-md mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden mt-6 transition-all duration-300">
+            <div class="bg-gradient-to-r from-indigo-800 to-indigo-950 p-6 text-white text-center">
+                <i class="fas fa-file-signature text-4xl mb-3 text-amber-400"></i>
+                <h2 class="text-2xl font-bold">Ujian Tengah/Akhir Semester</h2>
+                <p class="text-indigo-200 text-sm mt-1">Mata Kuliah: Pemrograman Web (HTML, CSS, JS, PHP, Database)</p>
+            </div>
+            <div class="p-6 sm:p-8">
+                <div class="mb-4 bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-lg text-sm text-indigo-900">
+                    <p class="font-semibold"><i class="fas fa-info-circle mr-2"></i>Informasi Ujian:</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1 text-xs text-indigo-800">
+                        <li>Jumlah Soal: <strong>50 Soal</strong></li>
+                        <li>Durasi Waktu: <strong>60 Menit</strong></li>
+                        <li>Passing Grade: <strong>70% (Nilai 70)</strong></li>
+                    </ul>
+                </div>
+                
+                <form id="form-register" onsubmit="startExam(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Nama Lengkap</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input type="text" id="input-nama" required 
+                                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm" 
+                                placeholder="Masukkan nama lengkap Anda">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">NIM / No. Induk</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                                    <i class="fas fa-id-card"></i>
+                                </span>
+                                <input type="text" id="input-nim" required 
+                                    class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm" 
+                                    placeholder="Contoh: 21090123">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Kelas</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                                    <i class="fas fa-users"></i>
+                                </span>
+                                <input type="text" id="input-kelas" required 
+                                    class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm" 
+                                    placeholder="Contoh: IF-4A">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-indigo-200 hover:shadow-indigo-300 transition duration-150 flex items-center justify-center space-x-2 mt-6">
+                        <span>Mulai Ujian Sekarang</span>
+                        <i class="fas fa-play text-xs"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- SCREEN 2: Exam Workspace (Split Layout) -->
+        <section id="screen-exam" class="hidden grid grid-cols-1 lg:grid-cols-4 gap-6 transition-all duration-300">
+            <!-- Left Side: Main Question Interface -->
+            <div class="lg:col-span-3 space-y-4">
+                
+                <!-- Exam Header Card (Siswa info & Time status) -->
+                <div class="bg-white rounded-2xl shadow-md border border-slate-100 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="h-10 w-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 font-bold text-lg">
+                            <span id="workspace-user-initial">U</span>
+                        </div>
+                        <div>
+                            <h3 id="workspace-user-name" class="font-bold text-slate-800 text-sm sm:text-base">Nama Lengkap</h3>
+                            <p class="text-xs text-slate-500"><span id="workspace-user-kelas">Kelas</span> • NIM: <span id="workspace-user-nim" class="font-mono">NIM</span></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Countdown Timer -->
+                    <div class="bg-red-50 border border-red-100 rounded-xl px-4 py-2 flex items-center justify-between sm:justify-end space-x-3 text-red-700 min-w-[150px]">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-clock animate-pulse text-lg"></i>
+                            <span class="text-xs font-medium">Sisa Waktu:</span>
+                        </div>
+                        <span id="countdown-timer" class="font-mono font-bold text-lg tracking-wider">00:00:00</span>
+                    </div>
+                </div>
+
+                <!-- Main Question Card -->
+                <div class="bg-white rounded-2xl shadow-md border border-slate-100 p-6 relative min-h-[400px] flex flex-col justify-between">
+                    <div>
+                        <!-- Question Header -->
+                        <div class="flex justify-between items-center pb-4 mb-4 border-b border-slate-100">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1.5 rounded-full">
+                                SOAL NOMOR <span id="current-question-num-header">1</span> DARI 50
+                            </span>
+                            <div class="flex items-center space-x-2">
+                                <label class="inline-flex items-center space-x-2 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold px-3 py-1.5 rounded-full cursor-pointer select-none">
+                                    <input type="checkbox" id="checkbox-doubt" onchange="toggleDoubt()" class="rounded text-amber-500 focus:ring-amber-400 h-3.5 w-3.5 border-amber-300">
+                                    <span>Ragu-Ragu</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Question Statement -->
+                        <div id="question-text" class="text-slate-800 text-base sm:text-lg font-medium leading-relaxed mb-6">
+                            Memuat pertanyaan...
+                        </div>
+
+                        <!-- Multiple Choice Options -->
+                        <div class="space-y-3" id="options-container">
+                            <!-- JS will inject options here -->
+                        </div>
+                    </div>
+
+                    <!-- Question Navigation Actions -->
+                    <div class="flex justify-between items-center border-t border-slate-100 pt-6 mt-8">
+                        <button id="btn-prev" onclick="navigateQuestion(-1)" class="px-5 py-2.5 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-xl font-semibold text-sm transition flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-chevron-left text-xs"></i>
+                            <span>Sebelumnya</span>
+                        </button>
+
+                        <button id="btn-next" onclick="navigateQuestion(1)" class="px-5 py-2.5 bg-indigo-600 text-white hover:bg-indigo-700 rounded-xl font-semibold text-sm transition flex items-center space-x-2 shadow-md shadow-indigo-100">
+                            <span>Berikutnya</span>
+                            <i class="fas fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Navigation Panel -->
+            <div class="space-y-4">
+                <div class="bg-white rounded-2xl shadow-md border border-slate-100 p-5">
+                    <h4 class="font-bold text-slate-800 text-sm mb-3 pb-2 border-b border-slate-100 flex items-center justify-between">
+                        <span>Navigasi Soal</span>
+                        <span class="text-xs font-normal text-slate-400">Total: 50 Soal</span>
+                    </h4>
+                    
+                    <!-- Question Grid -->
+                    <div id="nav-grid" class="grid grid-cols-5 gap-2 max-h-[350px] overflow-y-auto pr-1">
+                        <!-- Navigation boxes (1-50) injected here by JS -->
+                    </div>
+
+                    <!-- Legend Info -->
+                    <div class="mt-5 pt-4 border-t border-slate-100 grid grid-cols-2 gap-2 text-[11px] text-slate-500">
+                        <div class="flex items-center space-x-1.5">
+                            <div class="w-3.5 h-3.5 bg-green-500 rounded border border-green-600"></div>
+                            <span>Dijawab</span>
+                        </div>
+                        <div class="flex items-center space-x-1.5">
+                            <div class="w-3.5 h-3.5 bg-amber-400 rounded border border-amber-500"></div>
+                            <span>Ragu-ragu</span>
+                        </div>
+                        <div class="flex items-center space-x-1.5">
+                            <div class="w-3.5 h-3.5 bg-slate-100 rounded border border-slate-200"></div>
+                            <span>Belum dijawab</span>
+                        </div>
+                        <div class="flex items-center space-x-1.5">
+                            <div class="w-3.5 h-3.5 bg-indigo-600 rounded border border-indigo-700"></div>
+                            <span>Aktif</span>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button onclick="showSubmitConfirmation()" class="w-full mt-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-100 hover:shadow-emerald-200 transition duration-150 flex items-center justify-center space-x-2">
+                        <i class="fas fa-check-double"></i>
+                        <span>Selesaikan Ujian</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 3: Exam Results Screen -->
+        <section id="screen-result" class="hidden max-w-4xl mx-auto space-y-6 transition-all duration-300">
+            <!-- Summary Card -->
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+                <div class="bg-gradient-to-r from-indigo-800 to-indigo-950 p-6 text-white flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-4">
+                    <div>
+                        <span class="text-amber-400 text-xs font-bold uppercase tracking-widest">Laporan Hasil Ujian</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">Ujian Selesai!</h2>
+                        <p class="text-indigo-200 text-sm mt-1">Sertifikat nilai digital dan lembar jawaban Anda telah diterbitkan.</p>
+                    </div>
+                    <button onclick="printResultPage()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold px-4 py-2 rounded-xl transition flex items-center space-x-2 text-sm">
+                        <i class="fas fa-print"></i>
+                        <span>Cetak Hasil</span>
+                    </button>
+                </div>
+
+                <div class="p-6 sm:p-8 space-y-6">
+                    <!-- Profile metadata + Grade badge -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                        <div class="md:col-span-2 bg-slate-50 border border-slate-100 rounded-2xl p-5 space-y-3">
+                            <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Identitas Peserta</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-600">
+                                <div><span class="text-slate-400 text-xs">Nama Lengkap:</span> <p class="font-bold text-slate-800" id="res-nama">Nama</p></div>
+                                <div><span class="text-slate-400 text-xs">NIM:</span> <p class="font-mono font-bold text-slate-800" id="res-nim">NIM</p></div>
+                                <div><span class="text-slate-400 text-xs">Kelas:</span> <p class="font-bold text-slate-800" id="res-kelas">Kelas</p></div>
+                                <div><span class="text-slate-400 text-xs">Waktu Penyelesaian:</span> <p class="font-bold text-slate-800" id="res-waktu">00:00</p></div>
+                            </div>
+                        </div>
+
+                        <!-- Score Circle Display -->
+                        <div class="flex flex-col items-center justify-center p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100/50">
+                            <span class="text-slate-500 font-semibold text-xs uppercase tracking-wider mb-2">Skor Akhir</span>
+                            <div class="relative flex items-center justify-center">
+                                <svg class="w-28 h-28 transform -rotate-90">
+                                    <circle cx="56" cy="56" r="48" stroke-width="8" stroke="#e2e8f0" fill="transparent" />
+                                    <circle id="score-progress-ring" cx="56" cy="56" r="48" stroke-width="8" stroke="#4f46e5" fill="transparent" stroke-dasharray="301.6" stroke-dashoffset="301.6" class="transition-all duration-1000" />
+                                </svg>
+                                <span class="absolute text-3xl font-extrabold text-slate-800" id="res-skor">0</span>
+                            </div>
+                            <!-- Pass status badge -->
+                            <div class="mt-3 px-4 py-1 rounded-full text-xs font-bold" id="res-status-badge">
+                                LULUS
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Bar Details -->
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div class="p-3 bg-green-50 rounded-xl border border-green-100">
+                            <i class="fas fa-check-circle text-green-500 text-lg mb-1"></i>
+                            <p class="text-[10px] text-green-700 font-bold uppercase">Benar</p>
+                            <p class="text-xl font-extrabold text-green-800" id="res-benar">0</p>
+                        </div>
+                        <div class="p-3 bg-red-50 rounded-xl border border-red-100">
+                            <i class="fas fa-times-circle text-red-500 text-lg mb-1"></i>
+                            <p class="text-[10px] text-red-700 font-bold uppercase">Salah</p>
+                            <p class="text-xl font-extrabold text-red-800" id="res-salah">0</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <i class="fas fa-question-circle text-slate-400 text-lg mb-1"></i>
+                            <p class="text-[10px] text-slate-500 font-bold uppercase">Kosong</p>
+                            <p class="text-xl font-extrabold text-slate-700" id="res-kosong">0</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100">
+                        <button onclick="restartExam()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl transition flex items-center justify-center space-x-2">
+                            <i class="fas fa-redo"></i>
+                            <span>Ulangi Ujian</span>
+                        </button>
+                        <button onclick="toggleReviewSection()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-indigo-100 transition flex items-center justify-center space-x-2">
+                            <i class="fas fa-search-plus"></i>
+                            <span id="btn-toggle-review-text">Tampilkan Review Pembahasan</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review List Container -->
+            <div id="review-section" class="hidden space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                    <h3 class="font-extrabold text-slate-800 text-lg flex items-center space-x-2">
+                        <i class="fas fa-clipboard-check text-indigo-600"></i>
+                        <span>Lembar Pembahasan Detail</span>
+                    </h3>
+                    <span class="text-xs text-slate-500">Gunakan sebagai modul belajar Anda</span>
+                </div>
+                
+                <!-- Questions Review Cards Injected Dynamically -->
+                <div id="review-cards-list" class="space-y-4"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Custom Modal Confirm Box -->
+    <div id="custom-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-100 max-w-sm w-full p-6 animate-scale-up">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-amber-50 text-amber-600 mb-4 border border-amber-200">
+                    <i class="fas fa-exclamation-triangle text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900" id="modal-title">Konfirmasi Selesai</h3>
+                <p class="text-sm text-slate-500 mt-2" id="modal-desc">Apakah Anda yakin ingin mengakhiri ujian ini sekarang? Pastikan semua soal telah diperiksa.</p>
+            </div>
+            <div class="mt-6 flex gap-3">
+                <button onclick="closeModal()" class="flex-1 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-700 font-bold text-sm transition">
+                    Kembali
+                </button>
+                <button id="modal-confirm-btn" class="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-xl text-white font-bold text-sm shadow-md transition">
+                    Ya, Selesai
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-4 text-center text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; 2026 Web-Exam App • Evaluasi Pendidikan Komputer. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 50 Questions Database about Web Programming
+        const questions = [
+            {
+                id: 1,
+                question: "Manakah tag HTML yang benar untuk membuat paragraf?",
+                options: {
+                    A: "&lt;p&gt;",
+                    B: "&lt;paragraph&gt;",
+                    C: "&lt;pg&gt;",
+                    D: "&lt;text&gt;"
+                },
+                correct: "A",
+                explanation: "Tag &lt;p&gt; digunakan untuk merepresentasikan dan merender teks dalam bentuk paragraf di dalam dokumen HTML."
+            },
+            {
+                id: 2,
+                question: "Tag HTML yang digunakan untuk menyisipkan baris baru secara horizontal (garis batas) adalah...",
+                options: {
+                    A: "&lt;br&gt;",
+                    B: "&lt;hr&gt;",
+                    C: "&lt;line&gt;",
+                    D: "&lt;break&gt;"
+                },
+                correct: "B",
+                explanation: "Tag &lt;hr&gt; (Horizontal Rule) digunakan untuk menyisipkan pemisah tematik berupa garis horizontal datar."
+            },
+            {
+                id: 3,
+                question: "Atribut manakah yang digunakan untuk menentukan URL eksternal atau target dari sebuah tautan/hyperlink?",
+                options: {
+                    A: "src",
+                    B: "link",
+                    C: "href",
+                    D: "target"
+                },
+                correct: "C",
+                explanation: "Atribut 'href' (hypertext reference) pada tag &lt;a&gt; menentukan alamat tujuan tautan."
+            },
+            {
+                id: 4,
+                question: "Bagaimanakah cara yang benar untuk membuat komentar satu baris di dalam file HTML?",
+                options: {
+                    A: "// ini komentar",
+                    B: "&lt;!-- ini komentar --&gt;",
+                    C: "/* ini komentar */",
+                    D: "# ini komentar"
+                },
+                correct: "B",
+                explanation: "Format komentar HTML menggunakan pembuka &lt;!-- dan penutup --&gt;."
+            },
+            {
+                id: 5,
+                question: "Elemen HTML manakah yang digunakan untuk membuat judul utama atau dengan ukuran visual terbesar?",
+                options: {
+                    A: "&lt;head&gt;",
+                    B: "&lt;heading&gt;",
+                    C: "&lt;h1&gt;",
+                    D: "&lt;h6&gt;"
+                },
+                correct: "C",
+                explanation: "Tag &lt;h1&gt; mendefinisikan heading level pertama (paling penting dan biasanya berukuran paling besar)."
+            },
+            {
+                id: 6,
+                question: "Atribut HTML manakah yang wajib dideklarasikan pada tag &lt;img&gt; untuk aksesibilitas pembaca layar dan teks alternatif ketika gambar gagal dimuat?",
+                options: {
+                    A: "title",
+                    B: "src",
+                    C: "alt",
+                    D: "desc"
+                },
+                correct: "C",
+                explanation: "Atribut 'alt' (alternate text) memberikan deskripsi alternatif untuk gambar demi alasan aksesibilitas dan SEO."
+            },
+            {
+                id: 7,
+                question: "Elemen HTML5 manakah yang digunakan secara khusus untuk membuat navigasi utama dari sebuah situs web?",
+                options: {
+                    A: "&lt;nav&gt;",
+                    B: "&lt;navigation&gt;",
+                    C: "&lt;menu&gt;",
+                    D: "&lt;section&gt;"
+                },
+                correct: "A",
+                explanation: "Tag &lt;nav&gt; adalah elemen semantik HTML5 yang didesain khusus untuk mengelompokkan tautan navigasi."
+            },
+            {
+                id: 8,
+                question: "Bagaimanakah cara membuat list (daftar) dengan nomor terurut secara otomatis di HTML?",
+                options: {
+                    A: "&lt;ul&gt;",
+                    B: "&lt;ol&gt;",
+                    C: "&lt;list&gt;",
+                    D: "&lt;dl&gt;"
+                },
+                correct: "B",
+                explanation: "Tag &lt;ol&gt; (Ordered List) menghasilkan daftar berurutan berupa angka romawi, numerik, atau alfabet."
+            },
+            {
+                id: 9,
+                question: "Tag HTML manakah yang digunakan untuk mendefinisikan baris di dalam struktur tabel?",
+                options: {
+                    A: "&lt;td&gt;",
+                    B: "&lt;th&gt;",
+                    C: "&lt;tr&gt;",
+                    D: "&lt;table-row&gt;"
+                },
+                correct: "C",
+                explanation: "Tag &lt;tr&gt; (Table Row) mendefinisikan baris sel di dalam struktur pembuatan tabel HTML."
+            },
+            {
+                id: 10,
+                question: "Jenis input HTML5 manakah yang secara bawaan memvalidasi format email ketika form dikirimkan?",
+                options: {
+                    A: "type=\"mail\"",
+                    B: "type=\"email\"",
+                    C: "type=\"text\"",
+                    D: "type=\"validate\""
+                },
+                correct: "B",
+                explanation: "Atribut type=\"email\" secara otomatis memicu validasi standar browser untuk memastikan sintaks email yang diinput benar."
+            },
+            {
+                id: 11,
+                question: "Apa singkatan dari teknologi CSS di dunia pengembangan web?",
+                options: {
+                    A: "Creative Style Sheets",
+                    B: "Cascading Style Sheets",
+                    C: "Computer Style Sheets",
+                    D: "Colorful Style Sheets"
+                },
+                correct: "B",
+                explanation: "CSS singkatan dari Cascading Style Sheets, digunakan untuk mendesain tampilan presentasi halaman web."
+            },
+            {
+                id: 12,
+                question: "Bagaimanakah cara menyisipkan file CSS eksternal ke dalam file HTML kita?",
+                options: {
+                    A: "&lt;style src=\"style.css\"&gt;",
+                    B: "&lt;link rel=\"stylesheet\" href=\"style.css\"&gt;",
+                    C: "&lt;stylesheet&gt;style.css&lt;/stylesheet&gt;",
+                    D: "&lt;script href=\"style.css\"&gt;"
+                },
+                correct: "B",
+                explanation: "Menghubungkan stylesheet eksternal dilakukan menggunakan elemen &lt;link&gt; di dalam bagian &lt;head&gt;."
+            },
+            {
+                id: 13,
+                question: "Bagaimanakah cara menunjuk suatu elemen HTML dengan ID tertentu di file stylesheet CSS?",
+                options: {
+                    A: ".nama_id",
+                    B: "#nama_id",
+                    C: "*nama_id",
+                    D: "id:nama_id"
+                },
+                correct: "B",
+                explanation: "ID Selector dalam sintaks CSS ditandai dengan awalan karakter hash/pagar (#)."
+            },
+            {
+                id: 14,
+                question: "Sifat bawaan model box (Box Model) CSS terdiri atas komponen-komponen berikut secara berurutan dari dalam ke luar, yaitu...",
+                options: {
+                    A: "Content &rarr; Padding &rarr; Border &rarr; Margin",
+                    B: "Content &rarr; Margin &rarr; Border &rarr; Padding",
+                    C: "Padding &rarr; Content &rarr; Margin &rarr; Border",
+                    D: "Content &rarr; Border &rarr; Padding &rarr; Margin"
+                },
+                correct: "A",
+                explanation: "Struktur Box Model CSS terdiri dari Content di bagian paling dalam, diikuti oleh Padding (jarak dalam), Border (garis tepi), dan Margin (jarak luar)."
+            },
+            {
+                id: 15,
+                question: "Properti CSS manakah yang digunakan untuk mengubah warna latar belakang suatu komponen web?",
+                options: {
+                    A: "color",
+                    B: "bg-color",
+                    C: "background-color",
+                    D: "text-color"
+                },
+                correct: "C",
+                explanation: "Properti 'background-color' mendefinisikan warna solid untuk background elemen."
+            },
+            {
+                id: 16,
+                question: "Properti CSS manakah yang digunakan untuk membuat teks menjadi tebal (bold)?",
+                options: {
+                    A: "font-style",
+                    B: "text-weight",
+                    C: "font-weight",
+                    D: "text-decoration"
+                },
+                correct: "C",
+                explanation: "Properti 'font-weight' digunakan untuk mengatur ketebalan teks (seperti normal, bold, 700, dsb)."
+            },
+            {
+                id: 17,
+                question: "Bagaimana cara menyembunyikan elemen tanpa menghapus keberadaannya di dalam struktur HTML menggunakan CSS?",
+                options: {
+                    A: "display: none;",
+                    B: "visibility: invisible;",
+                    C: "opacity: zero;",
+                    D: "clean: true;"
+                },
+                correct: "A",
+                explanation: "Menggunakan display: none; menyembunyikan elemen secara visual dan layout space-nya dilepas oleh browser."
+            },
+            {
+                id: 18,
+                question: "Teknik atau sintaks CSS manakah yang digunakan untuk merancang tata letak web responsif yang beradaptasi berdasarkan lebar viewport layar perangkat?",
+                options: {
+                    A: "@media",
+                    B: "@import",
+                    C: "@responsive",
+                    D: "@keyframes"
+                },
+                correct: "A",
+                explanation: "At-rule '@media' query di CSS digunakan untuk menerapkan blok kode desain khusus tergantung kriteria resolusi layar."
+            },
+            {
+                id: 19,
+                question: "Untuk meratakan konten flexbox agar berada di tengah secara horizontal (searah sumbu utama/main axis), properti yang tepat adalah...",
+                options: {
+                    A: "align-items: center;",
+                    B: "justify-content: center;",
+                    C: "align-content: center;",
+                    D: "text-align: center;"
+                },
+                correct: "B",
+                explanation: "Properti 'justify-content: center' berfungsi untuk menaruh item flexbox tepat di sumbu utama horizontal."
+            },
+            {
+                id: 20,
+                question: "Properti CSS 'position: absolute' akan menempatkan posisi elemen relatif terhadap...",
+                options: {
+                    A: "Elemen body secara mutlak",
+                    B: "Elemen parent terdekat yang memiliki posisi non-static",
+                    C: "Viewport layar browser",
+                    D: "Elemen sebelumnya di HTML"
+                },
+                correct: "B",
+                explanation: "Elemen dengan posisi absolute diposisikan relatif terhadap parent terdekatnya yang memiliki setelan properti position selain static (seperti relative/absolute/fixed)."
+            },
+            {
+                id: 21,
+                question: "Di dalam bahasa pemrograman JavaScript, cara yang benar untuk mendefinisikan variabel lokal yang nilainya dapat diubah adalah menggunakan kata kunci...",
+                options: {
+                    A: "var",
+                    B: "let",
+                    C: "const",
+                    D: "define"
+                },
+                correct: "B",
+                explanation: "Kata kunci 'let' diperkenalkan di ES6 untuk mendeklarasikan variabel block-scoped yang nilainya dapat dimutasi/diubah."
+            },
+            {
+                id: 22,
+                question: "Bagaimana cara menulis teks instruksi keluaran (output) langsung ke kotak dialog pesan pop-up di browser?",
+                options: {
+                    A: "console.log()",
+                    B: "document.write()",
+                    C: "alert()",
+                    D: "prompt()"
+                },
+                correct: "C",
+                explanation: "Fungsi alert() memicu modal pop-up bawaan browser yang memuat pesan teks yang dilemparkan sebagai argumen."
+            },
+            {
+                id: 23,
+                question: "Operator perbandingan manakah yang menguji kesamaan nilai SEKALIGUS kesamaan tipe datanya (strict equality) di JavaScript?",
+                options: {
+                    A: "==",
+                    B: "===",
+                    C: "=",
+                    D: "equal"
+                },
+                correct: "B",
+                explanation: "Operator '===' membandingkan nilai beserta tipe datanya tanpa melakukan pemaksaan tipe otomatis (type coercion)."
+            },
+            {
+                id: 24,
+                question: "Fungsi JavaScript bawaan manakah yang dapat merubah format string numerik menjadi tipe data angka riil/pecahan (desimal)?",
+                options: {
+                    A: "parseInt()",
+                    B: "parseFloat()",
+                    C: "Number.parse()",
+                    D: "toDecimal()"
+                },
+                correct: "B",
+                explanation: "Fungsi 'parseFloat()' mengonversi parameter string dan mengembalikan representasi angka pecahan mengambang (floating point)."
+            },
+            {
+                id: 25,
+                question: "Bagaimanakah penulisan fungsi panah (Arrow Function) yang benar di standar JavaScript ES6?",
+                options: {
+                    A: "let myFunc = function() => {}",
+                    B: "let myFunc = () => {}",
+                    C: "let myFunc() => {}",
+                    D: "function myFunc = () => {}"
+                },
+                correct: "B",
+                explanation: "Sintaks penulisan Arrow Function standar adalah: let myFunc = (parameter) => { body_code }."
+            },
+            {
+                id: 26,
+                question: "Metode JavaScript manakah yang digunakan untuk menambahkan elemen baru di akhir/ujung indeks sebuah Array?",
+                options: {
+                    A: "pop()",
+                    B: "shift()",
+                    C: "push()",
+                    D: "unshift()"
+                },
+                correct: "C",
+                explanation: "Metode push() memasukkan satu atau lebih nilai baru ke akhir array dan mengembalikan panjang barunya."
+            },
+            {
+                id: 27,
+                question: "Kejadian (Event) DOM JavaScript manakah yang dipicu secara otomatis ketika pengguna selesai mengklik sebuah tombol HTML?",
+                options: {
+                    A: "onclick",
+                    B: "onhover",
+                    C: "onchange",
+                    D: "onsubmit"
+                },
+                correct: "A",
+                explanation: "Event handler 'onclick' merepresentasikan kejadian click mouse atau sentuhan pada elemen bersangkutan."
+            },
+            {
+                id: 28,
+                question: "Metode Document Object Model (DOM) manakah yang paling cepat dan umum digunakan untuk menyeleksi satu elemen HTML berdasarkan keunikan ID-nya?",
+                options: {
+                    A: "document.getElementsByClassName()",
+                    B: "document.querySelector()",
+                    C: "document.getElementById()",
+                    D: "document.getElementsByTagName()"
+                },
+                correct: "C",
+                explanation: "Metode document.getElementById('id_name') mengembalikan objek elemen HTML pertama yang memiliki ID yang cocok."
+            },
+            {
+                id: 29,
+                question: "Struktur data JSON (JavaScript Object Notation) umumnya direpresentasikan menggunakan pasangan...",
+                options: {
+                    A: "Key dan Value",
+                    B: "Tag dan Atribut",
+                    C: "Indeks dan Kolom",
+                    D: "Baris dan Field"
+                },
+                correct: "A",
+                explanation: "JSON menyimpan data terstruktur dalam bentuk key (kunci berupa teks string) dan value (nilai)."
+            },
+            {
+                id: 30,
+                question: "API modern bawaan JavaScript yang digunakan untuk melakukan request data secara asinkron (AJAX) ke server dengan mengembalikan objek Promise adalah...",
+                options: {
+                    A: "XMLHttp",
+                    B: "Fetch API",
+                    C: "AjaxRequest",
+                    D: "QueryString"
+                },
+                correct: "B",
+                explanation: "Fetch API menyediakan antarmuka modern yang simpel untuk mengambil resource (data asinkron) melintasi jaringan internet."
+            },
+            {
+                id: 31,
+                question: "Metode Array manakah yang digunakan untuk membuat array baru berisi elemen-elemen yang lolos kriteria uji fungsi logika tertentu?",
+                options: {
+                    A: "map()",
+                    B: "filter()",
+                    C: "reduce()",
+                    D: "forEach()"
+                },
+                correct: "B",
+                explanation: "Fungsi filter() melakukan iterasi dan menyalin elemen array lama ke array baru jika mengembalikan nilai true pada fungsi penguji."
+            },
+            {
+                id: 32,
+                question: "Apakah output dari kode JavaScript berikut: console.log(typeof NaN); ?",
+                options: {
+                    A: "\"nan\"",
+                    B: "\"undefined\"",
+                    C: "\"number\"",
+                    D: "\"null\""
+                },
+                correct: "C",
+                explanation: "Di JavaScript, NaN (Not-a-Number) secara teknis digolongkan sebagai tipe data angka ('number')."
+            },
+            {
+                id: 33,
+                question: "Untuk menghentikan perulangan (loop) secara paksa di JavaScript saat kondisi tertentu tercapai, kita menggunakan kata kunci...",
+                options: {
+                    A: "return",
+                    B: "continue",
+                    C: "break",
+                    D: "exit"
+                },
+                correct: "C",
+                explanation: "Kata kunci 'break' keluar seketika dari loop terdekat (for/while/do-while) dan melanjutkan baris instruksi sesudahnya."
+            },
+            {
+                id: 34,
+                question: "Metode manakah yang digunakan untuk mengubah objek JavaScript menjadi string JSON agar siap dikirimkan ke server?",
+                options: {
+                    A: "JSON.parse()",
+                    B: "JSON.stringify()",
+                    C: "JSON.convert()",
+                    D: "JSON.toString()"
+                },
+                correct: "B",
+                explanation: "JSON.stringify() mengubah objek atau nilai JavaScript menjadi string representasi data JSON format standar."
+            },
+            {
+                id: 35,
+                question: "Manakah cara penulisan struktur percabangan kondisional (if-else) yang benar di JavaScript?",
+                options: {
+                    A: "if i == 5 then",
+                    B: "if (i == 5)",
+                    C: "if i = 5 then",
+                    D: "if [i == 5]"
+                },
+                correct: "B",
+                explanation: "Kondisi di dalam struktur kontrol IF wajib diselubungi tanda kurung biasa () di JavaScript."
+            },
+            {
+                id: 36,
+                question: "Di dunia backend web, apa singkatan rekursif dari teknologi PHP?",
+                options: {
+                    A: "Personal Home Page",
+                    B: "PHP: Hypertext Preprocessor",
+                    C: "Preprocessed Hypertext Page",
+                    D: "Private Host Protocol"
+                },
+                correct: "B",
+                explanation: "Sifat nama PHP adalah akronim rekursif, yaitu PHP: Hypertext Preprocessor."
+            },
+            {
+                id: 37,
+                question: "Setiap variabel di dalam kode pemrograman PHP wajib diawali oleh simbol...",
+                options: {
+                    A: "@",
+                    B: "#",
+                    C: "$",
+                    D: "%"
+                },
+                correct: "C",
+                explanation: "PHP mengharuskan nama semua variabel dideklarasikan menggunakan awalan karakter dolar ($)."
+            },
+            {
+                id: 38,
+                question: "Bagaimanakah sintaks penutup dan pembuka PHP yang standar?",
+                options: {
+                    A: "&lt;?php ... ?&gt;",
+                    B: "&lt;? ... ?&gt;",
+                    C: "&lt;script ... &gt;",
+                    D: "&lt;php ... php&gt;"
+                },
+                correct: "A",
+                explanation: "Standard opening tag untuk mengaktifkan parser engine PHP adalah &lt;?php dan diakhiri dengan ?&gt;."
+            },
+            {
+                id: 39,
+                question: "Metode pengiriman formulir HTTP manakah di PHP yang akan menampilkan data input secara transparan di bilah alamat URL browser?",
+                options: {
+                    A: "POST",
+                    B: "GET",
+                    C: "PUT",
+                    D: "REQUEST"
+                },
+                correct: "B",
+                explanation: "Metode GET menyematkan data parameter form langsung sebagai query string di akhir penulisan URL."
+            },
+            {
+                id: 40,
+                question: "Variabel superglobal PHP bawaan yang digunakan untuk menampung data form yang dikirimkan dengan metode 'POST' secara aman adalah...",
+                options: {
+                    A: "$_GET",
+                    B: "$_REQUEST",
+                    C: "$_POST",
+                    D: "$POST"
+                },
+                correct: "C",
+                explanation: "$_POST adalah array asosiatif berisi variabel yang dikirimkan ke script saat ini lewat metode HTTP POST."
+            },
+            {
+                id: 41,
+                question: "Fungsi bawaan PHP manakah yang digunakan untuk memulai sesi pengguna baru atau melanjutkan sesi yang sudah ada di server?",
+                options: {
+                    A: "session_register()",
+                    B: "session_start()",
+                    C: "session_open()",
+                    D: "init_session()"
+                },
+                correct: "B",
+                explanation: "Fungsi session_start() mengirimkan header sesi dan menginisialisasi penyimpanan $_SESSION di memori server."
+            },
+            {
+                id: 42,
+                question: "Fungsi PHP manakah yang digunakan untuk mengimpor seluruh isi file script PHP lain dan memicu error fatal (menghentikan eksekusi program) jika file tersebut tidak ditemukan?",
+                options: {
+                    A: "include",
+                    B: "require",
+                    C: "import",
+                    D: "inject"
+                },
+                correct: "B",
+                explanation: "Kata kunci 'require' menyertakan file lain, namun jika file tersebut hilang atau korup, PHP akan melempar Fatal Error dan program berhenti seketika."
+            },
+            {
+                id: 43,
+                question: "Metode PDO atau ekstensi MySQLi manakah yang digunakan untuk mengikat nilai parameter guna mencegah serangan SQL Injection di PHP?",
+                options: {
+                    A: "mysql_query()",
+                    B: "Prepared Statements (prepare)",
+                    C: "mysqli_real_escape()",
+                    D: "md5()"
+                },
+                correct: "B",
+                explanation: "Prepared statements memisahkan query SQL dengan nilai datanya secara terpisah sehingga menangkal celah injeksi database."
+            },
+            {
+                id: 44,
+                question: "Apakah kegunaan utama dari teknologi Web Server seperti Apache, Nginx, atau LiteSpeed?",
+                options: {
+                    A: "Menulis dan mengedit script kode HTML secara otomatis",
+                    B: "Menerima request HTTP dari klien (browser) dan mengirimkan balasan berupa aset web",
+                    C: "Membuat database relasional",
+                    D: "Melakukan kompilasi kode biner aplikasi desktop"
+                },
+                correct: "B",
+                explanation: "Fungsi vital web server adalah memproses permintaan protokol HTTP/HTTPS dari klien dan meresponsnya kembali."
+            },
+            {
+                id: 45,
+                question: "Kode status HTTP respon server manakah yang mengindikasikan bahwa halaman/resource yang diminta TIDAK ditemukan (Not Found)?",
+                options: {
+                    A: "200",
+                    B: "301",
+                    C: "404",
+                    D: "500"
+                },
+                correct: "C",
+                explanation: "Status kode 404 merupakan tanda error standar bahwa server tidak menemukan dokumen yang dicari."
+            },
+            {
+                id: 46,
+                question: "Celah keamanan web yang terjadi saat hacker menyisipkan skrip berbahaya (biasanya JavaScript) ke halaman web yang dikunjungi user lain disebut...",
+                options: {
+                    A: "SQL Injection",
+                    B: "Cross-Site Scripting (XSS)",
+                    C: "DDoS Attack",
+                    D: "Man-in-the-Middle"
+                },
+                correct: "B",
+                explanation: "XSS terjadi saat data inputan tidak divalidasi/disanitasi dengan benar, membiarkan script JS berbahaya menyusup ke klien web."
+            },
+            {
+                id: 47,
+                question: "Protokol keamanan web yang mengenkripsi pertukaran data antara browser klien dengan server web dikenal sebagai...",
+                options: {
+                    A: "HTTP",
+                    B: "HTTPS (menggunakan SSL/TLS)",
+                    C: "FTP",
+                    D: "SMTP"
+                },
+                correct: "B",
+                explanation: "HTTPS mengamankan komunikasi lalu lintas data web melalui enkripsi sertifikat SSL/TLS."
+            },
+            {
+                id: 48,
+                question: "Metode HTTP (HTTP Methods) manakah yang umum direkomendasikan untuk melakukan aksi 'MENGHAPUS' suatu entitas database dalam kaidah arsitektur RESTful API?",
+                options: {
+                    A: "GET",
+                    B: "POST",
+                    C: "DELETE",
+                    D: "REMOVE"
+                },
+                correct: "C",
+                explanation: "Aksi penghapusan entitas pada konsep REST API diwakili secara semantik oleh metode HTTP DELETE."
+            },
+            {
+                id: 49,
+                question: "Tempat penyimpanan data kecil berupa teks di browser komputer klien yang memiliki tanggal kedaluwarsa bawaan disebut...",
+                options: {
+                    A: "Session",
+                    B: "Cookie",
+                    C: "LocalStorage",
+                    D: "Cache Memory"
+                },
+                correct: "B",
+                explanation: "Cookie adalah data string kecil yang dikirim server atau disimpan oleh browser lokal dan memiliki batas kedaluwarsa."
+            },
+            {
+                id: 50,
+                question: "Di dalam pengembangan aplikasi web modern, apakah peran utama dari sistem Node.js?",
+                options: {
+                    A: "Sebagai browser baru yang berbasis compiler Javascript modern",
+                    B: "Sebagai runtime environment untuk menjalankan kode JavaScript di sisi server (backend)",
+                    C: "Sebagai generator pengganti kode HTML5 murni",
+                    D: "Sebagai sistem database relasional non-SQL"
+                },
+                correct: "B",
+                explanation: "Node.js memungkinkan JavaScript berjalan di luar browser, utamanya dipakai untuk membuat program server backend."
+            }
+        ];
+
+        // Application State
+        let currentQuestionIndex = 0;
+        let userAnswers = {}; // Format: { questionId: "A"/"B"/"C"/"D" }
+        let doubtfulAnswers = {}; // Format: { questionId: true/false }
+        let examTimeLeft = 3600; // 60 minutes in seconds
+        let timerInterval = null;
+        let isExamFinished = false;
+
+        // User Identity
+        let userData = {
+            nama: "",
+            nim: "",
+            kelas: ""
+        };
+
+        // DOM elements cache
+        const screenRegister = document.getElementById("screen-register");
+        const screenExam = document.getElementById("screen-exam");
+        const screenResult = document.getElementById("screen-result");
+        const formRegister = document.getElementById("form-register");
+        
+        // Modal components
+        const customModal = document.getElementById("custom-modal");
+        const modalTitle = document.getElementById("modal-title");
+        const modalDesc = document.getElementById("modal-desc");
+        const modalConfirmBtn = document.getElementById("modal-confirm-btn");
+
+        // 1. Start Exam
+        function startExam(event) {
+            event.preventDefault();
+            
+            // Get inputs
+            userData.nama = document.getElementById("input-nama").value.trim();
+            userData.nim = document.getElementById("input-nim").value.trim();
+            userData.kelas = document.getElementById("input-kelas").value.trim();
+
+            if (!userData.nama || !userData.nim || !userData.kelas) {
+                showToast("Harap isi semua kolom identitas!");
+                return;
+            }
+
+            // Sync with UI
+            document.getElementById("badge-nama").innerText = userData.nama;
+            document.getElementById("badge-nim").innerText = userData.nim;
+            document.getElementById("header-user-badge").classList.remove("hidden");
+
+            document.getElementById("workspace-user-name").innerText = userData.nama;
+            document.getElementById("workspace-user-nim").innerText = userData.nim;
+            document.getElementById("workspace-user-kelas").innerText = userData.kelas;
+            document.getElementById("workspace-user-initial").innerText = userData.nama.charAt(0).toUpperCase();
+
+            // Transition screens
+            screenRegister.classList.add("hidden");
+            screenExam.classList.remove("hidden");
+
+            // Build navigation and display first question
+            initExamNavigator();
+            displayQuestion(0);
+
+            // Start countdown
+            startTimer();
+        }
+
+        // TIMER UTILITY
+        function startTimer() {
+            examTimeLeft = 3600; // Reset
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                examTimeLeft--;
+                updateTimerDisplay();
+
+                // Warning when 5 minutes left
+                if (examTimeLeft === 300) {
+                    showToast("Sisa waktu tinggal 5 menit!");
+                }
+
+                if (examTimeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishExam(true); // Auto-submit when time's up
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const hours = Math.floor(examTimeLeft / 3600);
+            const minutes = Math.floor((examTimeLeft % 3600) / 60);
+            const seconds = examTimeLeft % 60;
+
+            const format = (num) => String(num).padStart(2, '0');
+            document.getElementById("countdown-timer").innerText = `${format(hours)}:${format(minutes)}:${format(seconds)}`;
+        }
+
+        // NAVIGATION PANEL SETUP (1-50 Grid)
+        function initExamNavigator() {
+            const navGrid = document.getElementById("nav-grid");
+            navGrid.innerHTML = ""; // Clear
+
+            questions.forEach((q, idx) => {
+                const btn = document.createElement("button");
+                btn.id = `nav-btn-${idx}`;
+                btn.type = "button";
+                btn.innerText = q.id;
+                btn.className = `h-10 text-xs font-bold rounded-lg border flex items-center justify-center transition-all ${getNavButtonClass(idx)}`;
+                btn.onclick = () => selectQuestion(idx);
+                navGrid.appendChild(btn);
+            });
+        }
+
+        function getNavButtonClass(idx) {
+            const qId = questions[idx].id;
+            const isCurrent = idx === currentQuestionIndex;
+            const isDoubt = doubtfulAnswers[qId];
+            const isAnswered = userAnswers[qId] !== undefined;
+
+            let bg = "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100";
+            
+            if (isAnswered) {
+                bg = "bg-green-500 text-white border-green-600 hover:bg-green-600";
+            }
+            if (isDoubt) {
+                bg = "bg-amber-400 text-slate-950 border-amber-500 hover:bg-amber-500";
+            }
+            if (isCurrent) {
+                // High contrast border for active
+                return `${bg} ring-2 ring-indigo-600 ring-offset-1`;
+            }
+            return bg;
+        }
+
+        function updateNavigatorStates() {
+            questions.forEach((q, idx) => {
+                const btn = document.getElementById(`nav-btn-${idx}`);
+                if (btn) {
+                    btn.className = `h-10 text-xs font-bold rounded-lg border flex items-center justify-center transition-all ${getNavButtonClass(idx)}`;
+                }
+            });
+        }
+
+        // DISPLAYING CURRENT QUESTION
+        function displayQuestion(index) {
+            currentQuestionIndex = index;
+            const q = questions[index];
+
+            // Header info
+            document.getElementById("current-question-num-header").innerText = q.id;
+            
+            // Check box doubt state
+            document.getElementById("checkbox-doubt").checked = !!doubtfulAnswers[q.id];
+
+            // Setup Question text
+            document.getElementById("question-text").innerHTML = q.question;
+
+            // Generate Options with dynamic templates
+            const container = document.getElementById("options-container");
+            container.innerHTML = "";
+
+            Object.entries(q.options).forEach(([key, value]) => {
+                const isSelected = userAnswers[q.id] === key;
+                const optionBtn = document.createElement("div");
+                optionBtn.className = `flex items-center p-3.5 rounded-xl border option-transition cursor-pointer select-none ${
+                    isSelected 
+                    ? "bg-indigo-50 border-indigo-400 text-indigo-900 ring-2 ring-indigo-500/20" 
+                    : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300"
+                }`;
+                optionBtn.onclick = () => selectOption(key);
+
+                optionBtn.innerHTML = `
+                    <div class="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm mr-3 ${
+                        isSelected ? "bg-indigo-600 text-white" : "bg-slate-100 text-slate-500"
+                    }">
+                        ${key}
+                    </div>
+                    <div class="text-sm font-medium pr-2">${value}</div>
+                `;
+                container.appendChild(optionBtn);
+            });
+
+            // Handle prev/next button states
+            document.getElementById("btn-prev").disabled = index === 0;
+            
+            // Next button text changes for the last question
+            const btnNextText = document.getElementById("btn-next");
+            if (index === questions.length - 1) {
+                btnNextText.innerHTML = `<span>Selesai</span> <i class="fas fa-check-double text-xs"></i>`;
+                btnNextText.onclick = () => showSubmitConfirmation();
+            } else {
+                btnNextText.innerHTML = `<span>Berikutnya</span> <i class="fas fa-chevron-right text-xs"></i>`;
+                btnNextText.onclick = () => navigateQuestion(1);
+            }
+
+            updateNavigatorStates();
+        }
+
+        // CONTROL LOGIC
+        function selectOption(key) {
+            const q = questions[currentQuestionIndex];
+            userAnswers[q.id] = key;
+            displayQuestion(currentQuestionIndex);
+        }
+
+        function toggleDoubt() {
+            const q = questions[currentQuestionIndex];
+            const checkbox = document.getElementById("checkbox-doubt");
+            if (checkbox.checked) {
+                doubtfulAnswers[q.id] = true;
+            } else {
+                delete doubtfulAnswers[q.id];
+            }
+            updateNavigatorStates();
+        }
+
+        function selectQuestion(idx) {
+            displayQuestion(idx);
+        }
+
+        function navigateQuestion(direction) {
+            const newIndex = currentQuestionIndex + direction;
+            if (newIndex >= 0 && newIndex < questions.length) {
+                displayQuestion(newIndex);
+            }
+        }
+
+        // SUBMIT AND CONFIRMATION MODAL LOGIC
+        function showSubmitConfirmation() {
+            const totalAnswered = Object.keys(userAnswers).length;
+            const totalUnanswered = questions.length - totalAnswered;
+
+            modalTitle.innerText = "Konfirmasi Selesai Ujian";
+            modalDesc.innerHTML = `
+                Apakah Anda benar-benar ingin menyelesaikan ujian?<br>
+                <div class="mt-3 text-xs bg-slate-50 p-2.5 rounded-lg border text-left space-y-1">
+                    <p class="text-slate-600">Terjawab: <span class="font-bold text-green-600">${totalAnswered} Soal</span></p>
+                    <p class="text-slate-600">Belum Terjawab: <span class="font-bold text-red-500">${totalUnanswered} Soal</span></p>
+                    <p class="text-slate-600 text-[10px] mt-1 italic text-amber-600">*Soal ragu-ragu akan tetap dihitung sebagai jawaban masuk.</p>
+                </div>
+            `;
+            
+            modalConfirmBtn.onclick = () => {
+                closeModal();
+                finishExam(false);
+            };
+
+            customModal.classList.remove("hidden");
+        }
+
+        function closeModal() {
+            customModal.classList.add("hidden");
+        }
+
+        // 2. FINISH EXAM
+        function finishExam(isTimeOut = false) {
+            isExamFinished = true;
+            clearInterval(timerInterval);
+
+            // Calculate results
+            let correctCount = 0;
+            let incorrectCount = 0;
+            let unansweredCount = 0;
+
+            questions.forEach(q => {
+                const userAns = userAnswers[q.id];
+                if (userAns === undefined) {
+                    unansweredCount++;
+                } else if (userAns === q.correct) {
+                    correctCount++;
+                } else {
+                    incorrectCount++;
+                }
+            });
+
+            // Score calculation (Scale 0 - 100)
+            const rawScore = (correctCount / questions.length) * 100;
+            const finalScore = Math.round(rawScore);
+            const passingGrade = 70;
+            const isPassed = finalScore >= passingGrade;
+
+            // Render details on Screen Result
+            document.getElementById("res-nama").innerText = userData.nama;
+            document.getElementById("res-nim").innerText = userData.nim;
+            document.getElementById("res-kelas").innerText = userData.kelas;
+
+            // Calculate duration elapsed
+            const elapsedSeconds = 3600 - examTimeLeft;
+            const elapsedMin = Math.floor(elapsedSeconds / 60);
+            const elapsedSec = elapsedSeconds % 60;
+            document.getElementById("res-waktu").innerText = `${elapsedMin} menit ${elapsedSec} detik`;
+
+            document.getElementById("res-skor").innerText = finalScore;
+            document.getElementById("res-benar").innerText = correctCount;
+            document.getElementById("res-salah").innerText = incorrectCount;
+            document.getElementById("res-kosong").innerText = unansweredCount;
+
+            // Score SVG ring animation
+            const progressCircle = document.getElementById("score-progress-ring");
+            const radius = 48;
+            const circumference = 2 * Math.PI * radius; // ~301.6
+            const offset = circumference - (finalScore / 100) * circumference;
+            progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+            progressCircle.style.strokeDashoffset = offset;
+
+            // Set pass status styles
+            const badge = document.getElementById("res-status-badge");
+            if (isPassed) {
+                badge.className = "mt-3 px-4 py-1.5 rounded-full text-xs font-bold bg-green-100 text-green-800 border border-green-200";
+                badge.innerHTML = `<i class="fas fa-check-circle mr-1"></i> KOMPETEN / LULUS`;
+            } else {
+                badge.className = "mt-3 px-4 py-1.5 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-200";
+                badge.innerHTML = `<i class="fas fa-exclamation-circle mr-1"></i> TIDAK LULUS`;
+            }
+
+            // Build Review Cards
+            buildReviewList();
+
+            // Switch Screen
+            screenExam.classList.add("hidden");
+            screenResult.classList.remove("hidden");
+
+            if (isTimeOut) {
+                // Show Custom Toast about timeout
+                showToast("Waktu pengerjaan telah habis! Jawaban Anda otomatis disimpan.");
+            }
+        }
+
+        // BUILD DETAILED EXPLANATION/REVIEW
+        function buildReviewList() {
+            const listContainer = document.getElementById("review-cards-list");
+            listContainer.innerHTML = ""; // reset
+
+            questions.forEach((q, idx) => {
+                const userAns = userAnswers[q.id];
+                const isCorrect = userAns === q.correct;
+                const isUnanswered = userAns === undefined;
+
+                let cardBorderColor = "border-red-200 bg-red-50/20";
+                let statusBadge = `<span class="bg-red-100 text-red-800 text-[11px] font-bold px-2.5 py-1 rounded-full"><i class="fas fa-times-circle mr-1"></i> Salah</span>`;
+
+                if (isCorrect) {
+                    cardBorderColor = "border-emerald-200 bg-emerald-50/10";
+                    statusBadge = `<span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-1 rounded-full"><i class="fas fa-check-circle mr-1"></i> Benar</span>`;
+                } else if (isUnanswered) {
+                    cardBorderColor = "border-slate-200 bg-slate-50/50";
+                    statusBadge = `<span class="bg-slate-100 text-slate-500 text-[11px] font-bold px-2.5 py-1 rounded-full"><i class="fas fa-minus-circle mr-1"></i> Belum Dijawab</span>`;
+                }
+
+                const cardHtml = `
+                    <div class="p-5 rounded-2xl border ${cardBorderColor} transition">
+                        <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
+                            <span class="text-xs font-bold text-slate-400">SOAL NOMOR ${q.id}</span>
+                            ${statusBadge}
+                        </div>
+                        <p class="font-semibold text-slate-800 text-sm sm:text-base leading-relaxed mb-4">${q.question}</p>
+                        
+                        <!-- Answers comparison -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 text-xs">
+                            <div class="p-3 bg-white border border-slate-100 rounded-xl">
+                                <span class="text-slate-400 block mb-1">Pilihan Anda:</span>
+                                <span class="font-bold ${isCorrect ? "text-emerald-700" : "text-red-700"}">
+                                    ${isUnanswered ? "-" : `(${userAns}) ${q.options[userAns]}`}
+                                </span>
+                            </div>
+                            <div class="p-3 bg-white border border-slate-100 rounded-xl">
+                                <span class="text-slate-400 block mb-1">Kunci Jawaban:</span>
+                                <span class="font-bold text-emerald-700">
+                                    (${q.correct}) ${q.options[q.correct]}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Explanatory Box -->
+                        <div class="p-4 bg-indigo-50 border-l-4 border-indigo-500 rounded-r-xl">
+                            <h5 class="text-xs font-bold text-indigo-900 flex items-center mb-1">
+                                <i class="fas fa-lightbulb text-amber-400 mr-1.5 text-sm"></i>
+                                PEMBAHASAN:
+                            </h5>
+                            <p class="text-xs leading-relaxed text-indigo-950">${q.explanation}</p>
+                        </div>
+                    </div>
+                `;
+
+                const wrapper = document.createElement("div");
+                wrapper.innerHTML = cardHtml;
+                listContainer.appendChild(wrapper);
+            });
+        }
+
+        // TOGGLE EXPLANATION DRAWER
+        function toggleReviewSection() {
+            const reviewSec = document.getElementById("review-section");
+            const btnText = document.getElementById("btn-toggle-review-text");
+            if (reviewSec.classList.contains("hidden")) {
+                reviewSec.classList.remove("hidden");
+                btnText.innerText = "Sembunyikan Review Pembahasan";
+                // Smooth scroll to reviews
+                reviewSec.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                reviewSec.classList.add("hidden");
+                btnText.innerText = "Tampilkan Review Pembahasan";
+            }
+        }
+
+        // RESTART EXAM TRIGGER
+        function restartExam() {
+            userAnswers = {};
+            doubtfulAnswers = {};
+            currentQuestionIndex = 0;
+            isExamFinished = false;
+
+            // Reset UI
+            document.getElementById("review-section").classList.add("hidden");
+            document.getElementById("btn-toggle-review-text").innerText = "Tampilkan Review Pembahasan";
+
+            // Return to Form Register (or reuse data and start immediately)
+            screenResult.classList.add("hidden");
+            screenRegister.classList.remove("hidden");
+            document.getElementById("header-user-badge").classList.add("hidden");
+        }
+
+        // PRINT REPORT CARD
+        function printResultPage() {
+            window.print();
+        }
+
+        // CUSTOM TOAST NOTIFICATION
+        function showToast(message) {
+            // Check for existing toast to prevent stacking too much
+            const existingToast = document.getElementById("custom-toast");
+            if (existingToast) existingToast.remove();
+
+            const toast = document.createElement("div");
+            toast.id = "custom-toast";
+            toast.className = "fixed bottom-5 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-lg flex items-center space-x-2 z-50 animate-bounce";
+            toast.innerHTML = `
+                <i class="fas fa-info-circle text-amber-400"></i>
+                <span class="font-medium">${message}</span>
+            `;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add("opacity-0", "transition-opacity", "duration-500");
+                setTimeout(() => toast.remove(), 500);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
